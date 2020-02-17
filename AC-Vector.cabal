@@ -26,7 +26,14 @@ License-file:  License.txt
 Author:        Andrew Coppin
 Maintainer:    MathematicalOrchid@hotmail.com
 Build-Type:    Simple
-Tested-With:   GHC == 6.10.3
+Tested-With:   GHC == 7.6.*,
+               GHC == 7.8.*,
+               GHC == 7.10.*,
+               GHC == 8.0.*,
+               GHC == 8.2.*,
+               GHC == 8.4.*,
+               GHC == 8.6.*,
+               GHC == 8.8.*
 
 Library
   Exposed-modules:
