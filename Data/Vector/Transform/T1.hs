@@ -4,7 +4,7 @@
 
 module Data.Vector.Transform.T1 where
 
-import Data.Monoid
+import Data.Semigroup
 
 import Data.Vector.Class
 import Data.Vector.V1
@@ -21,14 +21,17 @@ data Transform1 =
     }
   deriving (Eq, Show)
 
-instance Monoid Transform1 where
-  mempty = Transform1  1 0
-  mappend a b =
+instance Semigroup Transform1 where
+  a <> b =
     Transform1
     {
       t1_XX = t1_XX a * t1_XX b,
       t1_1X = t1_1X a * t1_XX b  +  t1_1X b
     }
+
+instance Monoid Transform1 where
+  mempty = Transform1  1 0
+  mappend = (<>)
 
 -- | Apply a 1D transformation to a 1D point, yielding a new 1D point.
 transformP1 :: Transform1 -> Vector1 -> Vector1

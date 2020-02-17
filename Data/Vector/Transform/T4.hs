@@ -4,7 +4,7 @@
 
 module Data.Vector.Transform.T4 where
 
-import Data.Monoid
+import Data.Semigroup
 
 import Data.Vector.Class
 import Data.Vector.V4
@@ -24,9 +24,8 @@ data Transform4 =
     }
   deriving (Eq, Show)
 
-instance Monoid Transform4 where
-  mempty = Transform4  1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0
-  mappend a b =
+instance Semigroup Transform4 where
+  a <> b =
     Transform4
     {
       t4_XX = t4_XX a * t4_XX b  +  t4_XY a * t4_YX b  +  t4_XZ a * t4_ZX b  +  t4_XW a * t4_WX b,
@@ -53,6 +52,10 @@ instance Monoid Transform4 where
       t4_WW = t4_WX a * t4_XW b  +  t4_WY a * t4_YW b  +  t4_WZ a * t4_ZW b  +  t4_WW a * t4_WW b,
       t4_1W = t4_1X a * t4_XW b  +  t4_1Y a * t4_YW b  +  t4_1Z a * t4_ZW b  +  t4_1W a * t4_WW b  +  t4_1W b
     }
+
+instance Monoid Transform4 where
+  mempty = Transform4  1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0
+  mappend = (<>)
 
 -- | Apply a 4D transformation to a 4D point, yielding a new 4D point.
 transformP4 :: Transform4 -> Vector4 -> Vector4

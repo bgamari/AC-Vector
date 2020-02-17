@@ -4,7 +4,7 @@
 
 module Data.Vector.Transform.T3 where
 
-import Data.Monoid
+import Data.Semigroup
 
 import Data.Vector.Class
 import Data.Vector.V3
@@ -23,9 +23,8 @@ data Transform3 =
     }
   deriving (Eq, Show)
 
-instance Monoid Transform3 where
-  mempty = Transform3  1 0 0 0  0 1 0 0  0 0 1 0
-  mappend a b =
+instance Semigroup Transform3 where
+  a <> b =
     Transform3
     {
       t3_XX = t3_XX a * t3_XX b  +  t3_XY a * t3_YX b  +  t3_XZ a * t3_ZX b,
@@ -43,6 +42,10 @@ instance Monoid Transform3 where
       t3_ZZ = t3_ZX a * t3_XZ b  +  t3_ZY a * t3_YZ b  +  t3_ZZ a * t3_ZZ b,
       t3_1Z = t3_1X a * t3_XZ b  +  t3_1Y a * t3_YZ b  +  t3_1Z a * t3_ZZ b  +  t3_1Z b
     }
+
+instance Monoid Transform3 where
+  mempty = Transform3  1 0 0 0  0 1 0 0  0 0 1 0
+  mappend = (<>)
 
 -- | Apply a 3D transformation to a 3D point, yielding a new 3D point.
 transformP3 :: Transform3 -> Vector3 -> Vector3
