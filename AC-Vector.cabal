@@ -51,6 +51,6 @@ Library
     Data.BoundingBox.B2,
     Data.BoundingBox.B3,
     Data.BoundingBox.B4
-  Build-Depends:   base >= 4 && < 4.11,
+  Build-Depends:   base >= 4 && < 4.14,
                    semigroups
   HS-Source-Dirs:  .
